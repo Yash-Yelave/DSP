@@ -1,0 +1,71 @@
+Aim :- To Design a FIR filter by window method.
+MATLAB program to design FIR filter and plot magnitude responseusing following windows.
+(a)	Rectangular window
+(b)	Kaiser window
+(c)	Bartlett window
+(d)	Blackman window
+(e)	Hanning window
+(f)	Hamming window
+
+clc; %Clear the window
+close all; %Close all files 
+clear all; %Clear the screen
+rp=input('Enter the pasband ripple: '); %Enter the passband ripple
+rs=input('Enter the stopband ripple: '); %Enter the stopband ripple
+fp=input('Enter the Passband frequency in hertz: ');
+%Enter the passband freq.
+fs=input('Enter the Stopband frequency in hertz: ');
+%Enter the stopband freq.
+f=input('Enter the sampling frequency in hertz: ');
+%Enter the sampling freq. 
+wp=2*fp/f;
+ws=2*fs/f;
+num=-20*log10(sqrt(rp*rs))-13; 
+dem=14.6*(fs-fp)/f;
+ n=ceil(num/dem) %To find order n1=n+1;
+if(rem(n,2)~=0) n1=n;
+n=n-1
+end
+a=input('Enter the type of windowing techniques (inlower case in single quote):');
+switch a
+case 'rectangular'
+ y=boxcar(n1); case 
+'kaiser' 
+y=kaiser(n1); case
+‘bartlett' y=bartlett(n1); 
+case 'blackman' y=blackman(n1); case 
+'hamming' y=Hamming(n1); case
+ 'hanning' y=Hanning(n1); 
+otherwise
+disp('no windowing techniques');end 
+b=fir1(n,wp,y); %Low pass filter
+[h,o]=freqz(b,1,256); m=20*log10(abs(h));
+%Magnitude Responsesubplot(2,2,1)
+ plot((o/pi),m);
+title ('Low Pass Filter') 
+grid on;
+xlabel(' (a) Normalized Frequency -->'); 
+ylabel(' Gain in dB -->'); 
+b=fir1(n,wp,'high',y); %High pass filter
+ [h,o]=freqz(b,1,256); m=20*log10(abs(h)); 
+subplot(2,2,2)
+plot((o/pi),m);
+title ('High Pass Filter') 
+grid on;
+xlabel(' (b) Normalized Frequency -->'); 
+ylabel(' Gain in dB -->');
+wn=[wp ws]
+b=fir1(n,wn,y); %Band pass filter
+[h,o]=freqz(b,1,256);
+
+m=20*log10(abs(h));
+subplot(2,2,3) plot((o/pi),m); 
+title ('Band Pass Filter') 
+grid on;
+xlabel(' (c) Normalized Frequency -->'); ylabel
+(' Gain in dB -->'); b=fir1(n,wn,'stop',y); %Band reject filter[h,o]=freqz(b,1,256); m=20*log10(abs(h));
+subplot(2,2,4) plot((o/pi),m); 
+title ('Band Stop Filter')
+grid on;
+xlabel(' (d) Normalized Frequency -->');
+ylabel(' Gain in dB -->');
