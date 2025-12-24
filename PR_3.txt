@@ -1,0 +1,33 @@
+Aim :- Program for Convolution.
+close all; clc;–
+x = input('Input Sequence: ');
+h = input('Input impulse Sequence: ');
+i = length(x);
+j = length(h);
+Y = zeros(1, (i + j - 1));
+
+for m = 1:i
+    for n = 1:j
+        Y(m + n - 1) = Y(m + n - 1) + x(m) * h(n);
+    end
+end
+
+subplot(2, 2, 1);
+stem(x);
+title('Input Sequence x');
+
+subplot(2, 2, 2);
+stem(h);
+title('Impulse Sequence h');
+
+subplot(2, 2, 3);
+stem(Y);
+title('Manual Convolution Result');
+
+p = conv(x, h);
+subplot(2, 2, 4);
+
+stem(p);
+title('Built-in conv Result');
+
+sgtitle('Convolution of Input Sequence and Impulse Response');
