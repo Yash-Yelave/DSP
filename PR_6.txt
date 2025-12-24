@@ -1,0 +1,19 @@
+Aim :- Design a Digital IIB Butterworth filter with given specifications.
+%Title: Design a Digital IIR Butterworth Filter with given Specifications
+clc; clear all; close all;
+%% Filter Specifications
+
+Fp	=	20; % Passband Frequency in Hertz
+Fs	=	600; % Stopband Frequency in Hertz
+Ap	=	4; % Passband Attenuation in dB
+As	=	17; % Stopband Attenuation in dB
+SR	=	7000; % Sampling Rate in Samples/Sec
+ftype = 'low'; % Filter Type Wp = 2*Fp/SR;
+Wp = 2*Fp/SR
+Ws = 2*Fs/SR; % Passband & Stopband Frequencies (pi not reqd)
+%% Design required Filter [n,Wn] = buttord(Wp,Ws,Ap,As);
+[n,Wn] = buttord(Wp,Ws,Ap,As);
+[b,a] = butter(n,Wn,ftype);
+%% Plot its Frequency Responce freqz(b,a);
+freqz(b,a);
+title('Frequency Resonce');
