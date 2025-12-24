@@ -1,0 +1,78 @@
+Aim :- Program for DFT/IDFT.   
+clc;
+clear;
+
+% Input sequence
+x = input('Enter The Sequence To determine DFT or IDFT: \n');
+lx = length(x);
+
+% Plot input sequence
+subplot(2,2,1);
+stem(0:lx-1, x, "filled");
+xlabel('n');
+ylabel('Amplitude');
+title('Input Sequence');
+grid on;
+
+disp("Enter resp = 0 for DFT and resp = any number for IDFT");
+resp = input('Your Response\n');
+
+if resp == 0
+    % DFT case
+    N = input('Enter No of Points For DFT:\n');
+    if N < lx
+        N = lx; % Ensure N >= length of x
+    end
+    w = -2*pi*1i / N;
+    mf = 1;  % No scaling for DFT
+else
+    % IDFT case
+    N = lx;
+    w = 2*pi*1i / N;
+    mf = 1 / N; % scale for IDFT
+end
+
+% Zero-pad x if necessary
+x_padded = zeros(1, N);
+
+x_padded(1:lx) = x;
+
+% Initialize output array for DFT/IDFT
+X = zeros(1, N);
+
+% Compute DFT/IDFT manually
+for k = 1:N
+
+    for n = 1:N
+        X(k) = X(k) + x_padded(n) * exp(w*(k-1)*(n-1));
+    end
+    X(k) = mf * X(k);
+end
+
+% Plot magnitude spectrum (manual)
+subplot(2,2,2);
+stem(0:N-1, abs(X), "filled");
+title('Magnitude Spectrum (Manual DFT/IDFT)');
+xlabel('Frequency Index');
+ylabel('|X(k)|');
+grid on;
+
+% Plot phase spectrum (manual)
+subplot(2,2,3);
+stem(0:N-1, angle(X), "filled");
+title('Phase Spectrum (Manual DFT/IDFT)');
+
+xlabel('Frequency Index');
+ylabel('Phase (radians)');
+grid on;
+
+% Compute FFT (for comparison)
+X_fft = fft(x_padded, N);
+
+% Plot FFT magnitude
+subplot(2,2,4);
+stem(0:N-1, abs(X_fft), "filled");
+title('FFT Magnitude');
+xlabel('Frequency Index');
+ylabel('|X(k)|');
+grid on;
