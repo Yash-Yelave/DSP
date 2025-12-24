@@ -1,0 +1,43 @@
+Aim :- Program for Addition, Subtraction, Multiplication and Division.
+Program for Addition, Subtraction, Multiplication and Division.
+close all; clear all;
+% A=[3,4,5,6,7,8]
+% B [8,6,5,4,3,2]
+A=input('Enter	the	I Seq\n');
+B=input('Enter	the	II Seq\n');
+C=A	
+D=A-B	
+E=A./B	
+F=A.*B	
+subplot(3,2,1)	
+
+stem(A)
+title('I Input sequence');
+ xlabel('Time Index') 
+ylabel('Amplitude')
+ subplot(3,2,2)
+stem(B)
+
+title('II Input sequence'); 
+xlabel('Time Index') 
+ylabel('Amplitude') 
+subplot(3,2,3)
+stem(C) 
+title('Addition'); 
+xlabel('Time Index') 
+ylabel('Amplitude') 
+subplot(3,2,4) 
+stem(D) title('Substraction'); 
+xlabel('Time Index')
+
+ylabel('Amplitude') 
+subplot(3,2,5) 
+stem(E) 
+title('Division'); 
+xlabel('Time Index') 
+ylabel('Amplitude') 
+subplot(3,2,6) 
+stem(F)
+title('Multiplication');
+ xlabel('Time Index') 
+ylabel('Amplitude')
