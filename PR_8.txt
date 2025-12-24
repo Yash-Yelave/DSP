@@ -1,0 +1,33 @@
+Aim :- To perform Overlap-Add/Overlap-Save methods for long data sequence using DFT/FFT.
+clc();
+x = input('Enter input sequence \n'); lx = length(x);
+y = input('Enter output sequence\n'); ly = length(y);
+N = input('Enter sample nos of impulse response\n'); x = [x, zeros(1,(N-lx))];
+y = [y, zeros(1,(N-ly))]; h(1) = y(1)/x(1);
+for n = 1:N-1 
+    sum = 0;
+    for k = 0:n-1
+        sum = sum + h(k+1)*x(n+1-k); end
+    h(n+1) = (y(n+1) - sum)/x(1); end
+%disp('Impulse response of the causal system is');
+%disp(h');
+subplot(2,2,1); 
+n = 0:N-1;
+stem(n,x); 
+grid;
+xlabel('Time index n');ylabel('Amplitude');
+%ord = max(max(abs(y)), max(abs(x)));
+%ord = max(ord, max(abs(h)));
+%axis([-1, (N+1), -ord,ord]); 
+title('input sequence');
+%plot(n,x,'^',n,x,'o'); 
+subplot(2,2,2); 
+title('output sequence');
+stem(n,y); 
+grid;
+%plot(n,y,'^',n,y,'o');
+subplot(2,2,3);
+stem(n,h);
+grid;
+title('Impulse response sequence');
+%plot(n,h,'^',n,h,'o');
